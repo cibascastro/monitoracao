@@ -16,4 +16,4 @@ variable "postgres_user" {
 variable "postgres_password" {
   description = "Postgres password"
   type        = string
-}
+} 
