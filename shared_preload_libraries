@@ -1,0 +1,17 @@
+# ALteracao no arquivo postgresql.conf
+shared_preload_libraries = 'pg_stat_statements, auto_explain'
+
+# pg_stat_statements
+compute_query_id = 'auto'
+pg_stat_statements.max = 10000          # Número máximo de consultas rastreadas.
+pg_stat_statements.track = all         # Rastrear todas as consultas (ou somente 'top').
+pg_stat_statements.save = on           # Persistir estatísticas entre reinicializações.
+
+
+# auto_explain
+auto_explain.log_min_duration = 1000      # Loga consultas que demoram mais de 1000ms (1 segundo)
+auto_explain.log_analyze = true           # Inclui métricas de execução (similar ao EXPLAIN ANALYZE)
+auto_explain.log_buffers = true           # Inclui estatísticas de uso de buffers
+auto_explain.log_timing = true            # Inclui tempos detalhados de execução por nó
+auto_explain.log_triggers = true          # Loga gatilhos acionados durante a execução
+auto_explain.log_verbose = false          # Configura se informações detalhadas devem ser logadas
