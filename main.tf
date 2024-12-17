@@ -28,4 +28,4 @@ resource "docker_container" "postgres" {
     "POSTGRES_USER=${var.postgres_user}",
     "POSTGRES_PASSWORD=${var.postgres_password}"
   ]
-}
+} 
