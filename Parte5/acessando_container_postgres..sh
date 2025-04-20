@@ -1,1 +1,6 @@
-docker exec -it postgres-container psql -U postgres
+#!/bin/bash
+
+CONTAINER=postgres-container
+USER=postgres
+
+docker exec -it $CONTAINER psql -U $USER
