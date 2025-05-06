@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres-runner
+spec:
+  replicas: 5  # ou até 330, conforme sua necessidade
+  selector:
+    matchLabels:
+      app: postgres-runner
+  template:
+    metadata:
+      labels:
+        app: postgres-runner
+    spec:
+      containers:
+        - name: postgres-runner
+          image: postgres:16
+          command: ["/bin/sh", "-c"]
+          args:
+            - |
+              while true; do
+                echo "Executando script SQL..."
+                psql -h 192.168.100.3 -U "$POSTGRES_USER" -d dbs600 -f /scripts/script.sql
+                echo "Aguardando 10s..."
+                sleep 10
+              done
+          env:
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: POSTGRES_USER
+            - name: PGPASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: POSTGRES_PASSWORD
+          volumeMounts:
+            - name: postgres-script-volume
+              mountPath: /scripts
+      volumes:
+        - name: postgres-script-volume
+          configMap:
+            name: postgres-script
