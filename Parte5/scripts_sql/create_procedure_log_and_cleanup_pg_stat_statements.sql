@@ -7,6 +7,7 @@ BEGIN
 
     -- Inserir os dados atuais da pg_stat_statements
 	INSERT INTO pg_stat_statements_log (
+		runtime,
 		userid,
 		dbid,
 		toplevel,
