@@ -1,0 +1,1 @@
+CREATE INDEX idx_valor_categoria ON heavy_table (valor, categoria);

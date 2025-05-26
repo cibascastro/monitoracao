@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: postgres-runner
 spec:
-  replicas: 5  # ou até 330, conforme sua necessidade
+  replicas: 5  # ou até XPTO, conforme sua necessidade
   selector:
     matchLabels:
       app: postgres-runner
@@ -20,7 +20,7 @@ spec:
             - |
               while true; do
                 echo "Executando script SQL..."
-                psql -h 192.168.100.3 -U "$POSTGRES_USER" -d dbs600 -f /scripts/script.sql
+                psql -h 192.168.100.39 -U "$POSTGRES_USER" -d db_monitoramento -f /scripts/script.sql
                 echo "Aguardando 10s..."
                 sleep 10
               done

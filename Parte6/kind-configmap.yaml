@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgres-script
+  labels:
+    app: postgres-runner
+data:
+  script.sql: |
+    -- Script SQL de exemplo para execução recorrente
+    INSERT INTO logs (mensagem, data_execucao)
+    VALUES ('Script executado com sucesso pelo postgres-runner', NOW());
+
+    -- Você pode adicionar mais instruções abaixo:
+    -- SELECT COUNT(*) FROM logs;

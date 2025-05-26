@@ -1,0 +1,41 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgres-script
+  labels:
+    app: postgres-runner
+data:
+  script.sql: |
+    -- Script 1 - Consulta com COUNT(*) e LIKE
+    SELECT COUNT(*)
+    FROM heavy_table
+    WHERE lower(nome) LIKE '%abc%' AND valor > 500;
+
+    -- Script 2 - DELETE linha a linha via LOOP
+    DO $$
+    DECLARE
+      row_id INT;
+    BEGIN
+      RAISE NOTICE 'Iniciando deleção linha a linha...';
+      LOOP
+        SELECT id INTO row_id
+        FROM heavy_table
+        WHERE categoria = 'A'
+        LIMIT 1;
+
+        EXIT WHEN NOT FOUND;
+
+        DELETE FROM heavy_table WHERE id = row_id;
+      END LOOP;
+      RAISE NOTICE 'Deleção concluída.';
+    END $$;
+
+    -- Script 3 - UPDATE com subquery pesada
+    UPDATE heavy_table
+    SET valor = valor * 1.1,
+        nome = md5(nome || random()::text)
+    WHERE id IN (
+      SELECT id
+      FROM heavy_table
+      WHERE categoria = 'B'
+    );

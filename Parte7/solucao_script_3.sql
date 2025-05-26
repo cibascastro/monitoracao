@@ -1,0 +1,1 @@
+CREATE INDEX idx_valor_criado_em ON heavy_table (valor, runtime);
